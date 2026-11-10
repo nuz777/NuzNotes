@@ -15,11 +15,11 @@
 
   /* Glassmorphism Variables */
   --glass-bg: rgba(255, 255, 255, 0.68);
-  --glass-bg-subtle: rgba(255, 255, 255, 0.5);
-  --glass-bg-hover: rgba(255, 255, 255, 0.86);
-  --glass-bg-active: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(255, 255, 255, 0.85);
-  --glass-border-subtle: rgba(255, 255, 255, 0.65);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.52);
+  --glass-bg-hover: rgba(255, 255, 255, 0.88);
+  --glass-bg-active: rgba(255, 255, 255, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.88);
+  --glass-border-subtle: rgba(255, 255, 255, 0.75);
   --glass-shadow: 0 12px 35px -8px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
   --glass-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
   --blur-val: 20px;
@@ -116,7 +116,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: 10px 22px;
   border-radius: 20px;
   background: var(--glass-bg);
   backdrop-filter: blur(var(--blur-val)) saturate(180%);
@@ -124,20 +124,21 @@ body {
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow), var(--glass-inner-glow);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  gap: 16px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .brand-badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   background: var(--accent-gradient);
   color: #ffffff;
@@ -152,16 +153,71 @@ body {
 
 .brand-title {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-main);
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .brand-subtitle {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   font-weight: 500;
+}
+
+/* SELECTOR DE APARTADOS (TABS) EN EL HEADER */
+.view-switcher {
+  display: flex;
+  align-items: center;
+  background: rgba(241, 245, 249, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  gap: 4px;
+}
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 15px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06);
+}
+
+.tab-badge {
+  background: var(--accent-subtle);
+  color: var(--accent);
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border-radius: 20px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active .tab-badge {
+  background: var(--accent);
+  color: #ffffff;
 }
 
 /* Botones con estilo moderno */
@@ -221,14 +277,42 @@ body {
 }
 
 /* ========================================================
-   CONTENEDOR PRINCIPAL: Layout de 2 Cards transparentes y borrosas
+   CONTENEDOR DE VISTAS
    ======================================================== */
-.app-main {
+.views-wrapper {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+
+.view-panel {
+  flex: 1;
+  min-height: 0;
+}
+
+.view-panel[hidden] {
+  display: none !important;
+}
+
+/* VISTA 1: EDITOR DIVIDIDO (Sidebar + Editor) */
+#vista-editor.active {
   display: grid;
   grid-template-columns: 340px 1fr;
   gap: 18px;
-  min-height: 0; /* Permite scroll interno */
+  animation: viewFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Card Lateral (Sidebar) */
@@ -290,7 +374,7 @@ input[type='search']:focus {
   color: var(--accent);
 }
 
-/* Contenedor de la lista */
+/* Contenedor de la lista lateral */
 .lista-wrapper {
   flex: 1;
   min-height: 0;
@@ -298,7 +382,6 @@ input[type='search']:focus {
   padding-right: 4px;
 }
 
-/* Estilo de la lista y cards de cada nota */
 .lista {
   list-style: none;
   margin: 0;
@@ -308,7 +391,7 @@ input[type='search']:focus {
   gap: 10px;
 }
 
-/* CADA NOTA: Card transparente, borrosa con borde suave y elevación */
+/* Cada nota en la lista lateral */
 .lista li {
   position: relative;
   padding: 14px 16px;
@@ -336,7 +419,6 @@ input[type='search']:focus {
   box-shadow: 0 8px 24px -4px var(--accent-glow), 0 0 0 1px var(--accent);
 }
 
-/* Indicador visual en la nota activa */
 .lista li.activa::before {
   content: '';
   position: absolute;
@@ -374,38 +456,7 @@ input[type='search']:focus {
   font-weight: 500;
 }
 
-/* Estado vacío en el buscador/sidebar */
-.vacio-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 16px;
-  color: var(--text-muted);
-}
-
-.vacio-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: var(--glass-bg-subtle);
-  border: 1px solid var(--glass-border-subtle);
-  color: var(--text-light);
-  margin-bottom: 12px;
-}
-
-.vacio-texto {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-}
-
-/* ========================================================
-   CARD PRINCIPAL: Editor de notas transparente y borroso
-   ======================================================== */
+/* Card Principal: Editor de notas */
 .editor-card {
   display: flex;
   flex-direction: column;
@@ -464,7 +515,6 @@ input[type='search']:focus {
   white-space: nowrap;
 }
 
-/* Área de texto de la nota */
 .editor-body-box {
   flex: 1;
   display: flex;
@@ -500,7 +550,6 @@ input[type='search']:focus {
   box-shadow: 0 4px 20px rgba(79, 70, 229, 0.07);
 }
 
-/* Footer del editor */
 .editor-footer {
   display: flex;
   justify-content: space-between;
@@ -549,9 +598,7 @@ input[type='search']:focus {
   color: var(--text-light);
 }
 
-/* ========================================================
-   ESTADO VACÍO (SIN SELECCIÓN)
-   ======================================================== */
+/* Estado vacío en editor */
 .sin-seleccion-card {
   display: flex;
   flex-direction: column;
@@ -593,6 +640,417 @@ input[type='search']:focus {
 }
 
 /* ========================================================
+   VISTA 2: APARTADO DE CARDS (MURO / GALERÍA DE NOTAS)
+   ======================================================== */
+#vista-muro.active {
+  display: flex;
+  flex-direction: column;
+  animation: viewFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.muro-card-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-val)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-val)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-inner-glow);
+  padding: 22px 24px;
+  min-height: 0;
+  overflow: hidden;
+  gap: 16px;
+}
+
+.muro-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+}
+
+.muro-intro {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.muro-badge-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent-subtle);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+}
+
+.muro-title {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.muro-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.muro-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.muro-search-box {
+  position: relative;
+  width: 260px;
+}
+
+/* GRID DE CARDS */
+.muro-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  gap: 20px;
+  padding: 6px 4px 20px 4px;
+  align-content: start;
+}
+
+/* Card especial: Crear nueva tarjeta */
+.muro-card-add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px dashed rgba(99, 102, 241, 0.35);
+  border-radius: 20px;
+  padding: 26px 20px;
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  min-height: 220px;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  animation: cardPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.muro-card-add:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--accent);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px -8px rgba(79, 70, 229, 0.18);
+}
+
+.add-icon-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent-subtle);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.muro-card-add:hover .add-icon-circle {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 6px 18px var(--accent-glow);
+}
+
+.add-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.add-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* CADA CARD DE NOTA EN EL MURO */
+.muro-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 20px;
+  padding: 20px;
+  background: var(--glass-bg-subtle);
+  backdrop-filter: blur(var(--blur-card)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur-card)) saturate(160%);
+  border: 1px solid var(--glass-border-subtle);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.03);
+  cursor: pointer;
+  min-height: 220px;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  animation: cardPopIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: var(--card-delay, 0s);
+}
+
+/* Animación de entrada escalonada para las cards */
+@keyframes cardPopIn {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.92);
+  }
+  60% {
+    transform: translateY(-4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Animación de eliminación de una card */
+.muro-card.deleting {
+  animation: cardPopOut 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  pointer-events: none;
+}
+
+@keyframes cardPopOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.65) translateY(24px);
+  }
+}
+
+/* Efecto hover suave y llamativo */
+.muro-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 18px 36px -4px rgba(79, 70, 229, 0.16), 0 0 0 1px rgba(99, 102, 241, 0.2);
+}
+
+/* Barra superior decorativa de color en la card */
+.muro-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent-gradient);
+  border-radius: 20px 20px 0 0;
+}
+
+/* Paletas temáticas para las cards */
+.muro-card[data-color='0'] .muro-card-accent { background: linear-gradient(90deg, #4f46e5, #818cf8); }
+.muro-card[data-color='1'] .muro-card-accent { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+.muro-card[data-color='2'] .muro-card-accent { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
+.muro-card[data-color='3'] .muro-card-accent { background: linear-gradient(90deg, #ec4899, #f43f5e); }
+.muro-card[data-color='4'] .muro-card-accent { background: linear-gradient(90deg, #10b981, #34d399); }
+.muro-card[data-color='5'] .muro-card-accent { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+.muro-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.muro-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Botones de acción rápida en la card */
+.muro-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.muro-card:hover .muro-card-actions {
+  opacity: 1;
+}
+
+.card-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-action-btn:hover {
+  background: #ffffff;
+  color: var(--accent);
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-action-btn.delete:hover {
+  color: var(--danger);
+  border-color: rgba(225, 29, 72, 0.3);
+  background: var(--danger-bg);
+}
+
+/* Cuerpo de la nota en la card */
+.muro-card-body {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 16px;
+  flex: 1;
+  word-break: break-word;
+}
+
+/* Footer de la card */
+.muro-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(226, 232, 240, 0.7);
+}
+
+.muro-card-date {
+  font-size: 0.74rem;
+  color: var(--text-light);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.muro-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.muro-card-words {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  background: rgba(241, 245, 249, 0.8);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.muro-card-open {
+  font-size: 0.76rem;
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: transform 0.2s ease;
+}
+
+.muro-card:hover .muro-card-open {
+  transform: translateX(3px);
+}
+
+/* Estado vacío en el buscador/sidebar/muro */
+.vacio-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-muted);
+}
+
+.vacio-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--glass-bg-subtle);
+  border: 1px solid var(--glass-border-subtle);
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.vacio-texto {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* ========================================================
+   TOAST FLOTANTE DE NOTIFICACIONES ANIMADAS
+   ======================================================== */
+.toast-notification {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  background: rgba(15, 23, 42, 0.88);
+  color: #ffffff;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ========================================================
    SCROLLBAR ELEGANTE Y TRANSLÚCIDA
    ======================================================== */
 ::-webkit-scrollbar {
@@ -623,16 +1081,47 @@ input[type='search']:focus {
     padding: 12px 14px 20px 14px;
   }
 
-  .app-main {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 18px;
+  }
+
+  .brand {
+    justify-content: space-between;
+  }
+
+  .view-switcher {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tab-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .header-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #vista-editor.active {
     grid-template-columns: 1fr;
     grid-template-rows: 320px 500px;
   }
 
-  .app-header {
-    padding: 12px 18px;
+  .muro-top-bar {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .brand-title {
-    font-size: 1.1rem;
+  .muro-search-box {
+    width: 100%;
+  }
+
+  .muro-grid {
+    grid-template-columns: 1fr;
   }
 }
