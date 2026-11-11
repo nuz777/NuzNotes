@@ -395,7 +395,7 @@ function renderMuro() {
         <div class="muro-card-meta">
           <span class="muro-card-words">${palabrasTexto}</span>
           <span class="muro-card-open">
-            Abrir
+            <span class="muro-card-open-label">Abrir</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>

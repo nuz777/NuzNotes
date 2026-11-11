@@ -887,6 +887,9 @@ input[type='search']:focus {
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Botones de acción rápida en la card */
@@ -896,6 +899,7 @@ input[type='search']:focus {
   gap: 4px;
   opacity: 0.85;
   transition: opacity 0.2s ease;
+  flex-shrink: 0;
 }
 
 .muro-card:hover .muro-card-actions {
@@ -1112,16 +1116,257 @@ input[type='search']:focus {
     grid-template-rows: 320px 500px;
   }
 
+  .muro-card-wrapper {
+    padding: 18px 16px;
+    border-radius: 20px;
+  }
+
   .muro-top-bar {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
 
   .muro-search-box {
     width: 100%;
   }
 
+  /* Grid 2x2 para tablets y pantallas medianas */
   .muro-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+/* ========================================================
+   ESPECÍFICO PARA CELULARES (Móviles <= 640px)
+   Organización de cards en 2x2 optimizada
+   ======================================================== */
+@media (max-width: 640px) {
+  .app-wrapper {
+    padding: 10px 10px 18px 10px;
+  }
+
+  .app-header {
+    padding: 12px 14px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+  }
+
+  .header-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .muro-card-wrapper {
+    padding: 12px 10px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .muro-intro {
+    gap: 10px;
+  }
+
+  .muro-badge-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .muro-badge-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .muro-title {
+    font-size: 1.1rem;
+  }
+
+  .muro-subtitle {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .muro-search-box input {
+    padding: 9px 12px 9px 36px;
+    font-size: 0.86rem;
+    border-radius: 12px;
+  }
+
+  /* Grid 2x2 en celular */
+  .muro-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 2px 0 12px 0;
+  }
+
+  /* Tarjetas adaptadas al tamaño 2x2 */
+  .muro-card,
+  .muro-card-add {
+    padding: 12px 10px;
+    min-height: 155px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+  }
+
+  .muro-card-accent {
+    border-radius: 16px 16px 0 0;
+    height: 3px;
+  }
+
+  /* En táctil evita que el hover quede pegado */
+  .muro-card:hover {
+    transform: none;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    border-color: var(--glass-border-subtle);
+  }
+
+  .muro-card:active,
+  .muro-card-add:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  .muro-card-header {
+    gap: 4px;
+    margin-top: 1px;
+    margin-bottom: 6px;
+  }
+
+  .muro-card-title {
+    font-size: 0.88rem;
+    line-height: 1.25;
+    -webkit-line-clamp: 2;
+  }
+
+  /* Botones de acción siempre visibles en móvil (no requieren hover de ratón) */
+  .muro-card-actions {
+    gap: 2px;
+    opacity: 1;
+    flex-shrink: 0;
+  }
+
+  .card-action-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .card-action-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .muro-card-body {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    -webkit-line-clamp: 3;
+  }
+
+  .muro-card-footer {
+    padding-top: 8px;
+    gap: 4px;
+  }
+
+  .muro-card-date {
+    font-size: 0.68rem;
+    gap: 3px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .muro-card-date svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Se oculta el número de palabras para mantener el footer 2x2 limpio y legible */
+  .muro-card-words {
+    display: none;
+  }
+
+  .muro-card-open {
+    font-size: 0.7rem;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .muro-card-open svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Tarjeta de añadir nota adaptada a 2x2 */
+  .muro-card-add {
+    min-height: 155px;
+  }
+
+  .muro-card-add .add-icon-circle {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 8px;
+  }
+
+  .muro-card-add .add-icon-circle svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .muro-card-add .add-title {
+    font-size: 0.86rem;
+    margin-bottom: 2px;
+  }
+
+  .muro-card-add .add-desc {
+    font-size: 0.7rem;
+    line-height: 1.25;
+  }
+}
+
+/* Pantallas extra estrechas (celulares pequeños <= 390px) */
+@media (max-width: 390px) {
+  .muro-grid {
+    gap: 8px;
+  }
+
+  .muro-card,
+  .muro-card-add {
+    padding: 10px 8px;
+    min-height: 145px;
+    border-radius: 14px;
+  }
+
+  .muro-card-title {
+    font-size: 0.83rem;
+  }
+
+  .card-action-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .card-action-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .muro-card-body {
+    font-size: 0.75rem;
+    -webkit-line-clamp: 2;
+  }
+
+  /* En celulares muy pequeños solo se muestra la flecha '>' para ahorrar espacio horizontal */
+  .muro-card-open-label {
+    display: none;
   }
 }
